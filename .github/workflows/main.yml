@@ -40,3 +40,10 @@ jobs:
         run: mvn install -DskipTests=true
 
       - name: Run tests
+        run: mvn test -DsuiteXmlFile=src/test/resources/battery.xml
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: target/test-classes/testng-results.xml
