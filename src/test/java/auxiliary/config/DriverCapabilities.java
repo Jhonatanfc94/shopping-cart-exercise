@@ -16,7 +16,13 @@ import java.util.Random;
 
 public class DriverCapabilities {
     public static WebDriver chromeDriver() {
-        WebDriver driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--user-data-dir=/tmp/chrome-user-data-" + System.currentTimeMillis());
+
+        WebDriver driver = new ChromeDriver(options);
         windowDimension(driver);
 
         if (LocalConfiguration.web.enableLocation) {

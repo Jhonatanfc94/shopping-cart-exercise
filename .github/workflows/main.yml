@@ -3,17 +3,17 @@ name: Selenium Tests with Maven (Chrome Only)
 on:
   push:
     branches:
-      - main  # Cambia a tu rama principal (main, master, etc.)
+      - main
   pull_request:
     branches:
-      - main  # Cambia a tu rama principal
+      - main
 
 jobs:
   test:
-    runs-on: ubuntu-latest  # Usa el último Ubuntu para compatibilidad
+    runs-on: ubuntu-latest
 
     steps:
-      # Paso 1: Checkout del código del repositorio
+      # Paso 1: Checkout del código
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '21'
-          distribution: 'temurin'  # Usa Temurin (Adoptium) como distribución de Java
+          distribution: 'temurin'
 
       # Paso 3: Instala Chrome
       - name: Install Chrome
@@ -32,4 +32,4 @@ jobs:
 
       # Paso 4: Ejecuta las pruebas con Maven
       - name: Run tests with Maven
-        run: mvn test -Dbrowser=chrome  # Ejecuta pruebas solo en Chrome
+        run: mvn test -Dbrowser=chrome
