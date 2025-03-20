@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     
     services:
-      - name: selenium/standalone-chrome
+      selenium:
         image: selenium/standalone-chrome:latest
         options: --shm-size=2g
     
