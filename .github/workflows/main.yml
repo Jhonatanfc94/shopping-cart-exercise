@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
   test:
@@ -19,6 +16,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '21'
+          distribution: 'temurin'  # Otras opciones: 'adoptopenjdk', 'zulu', etc.
 
       - name: Install dependencies
         run: mvn install
