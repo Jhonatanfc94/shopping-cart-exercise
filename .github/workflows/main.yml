@@ -1,4 +1,4 @@
-name: Run TestNG Tests
+name: Selenium Tests
 
 on:
   push:
@@ -8,20 +8,18 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
         with:
-          distribution: 'temurin'
           java-version: '21'
-        
-      - name: Set unique user data dir for Chrome
-        run: |
-          echo "USER_DATA_DIR=target/chrome_user_data_$(date +%s)" >> $GITHUB_ENV
-          
-      - name: Build and Test
+          distribution: 'temurin'  # Otras opciones: 'adoptopenjdk', 'zulu', etc.
+
+      - name: Install dependencies
+        run: mvn install
+
+      - name: Run tests
         run: mvn clean test
