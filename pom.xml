@@ -122,7 +122,7 @@
                     <version>3.0.0-M8</version>
                     <configuration>
                         <suiteXmlFiles>
-                            <file>src\test\resources\chrome.xml</file>
+                            <file>src\test\resources\battery.xml</file>
                         </suiteXmlFiles>
                     </configuration>
                 </plugin>
