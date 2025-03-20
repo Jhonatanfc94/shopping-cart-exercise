@@ -4,6 +4,7 @@ import auxiliary.LocalConfiguration;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
@@ -15,7 +16,11 @@ import java.util.Random;
 
 public class DriverCapabilities {
     public static WebDriver chromeDriver() {
-        WebDriver driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+
+        String userDataDir = "target/chrome_user_data_" + System.currentTimeMillis();
+        options.addArguments("user-data-dir=" + userDataDir);
+        WebDriver driver = new ChromeDriver(options);
         windowDimension(driver);
         if(LocalConfiguration.web.enableLocation){
             Map<String, Object> coordinates = new HashMap<String, Object>()
