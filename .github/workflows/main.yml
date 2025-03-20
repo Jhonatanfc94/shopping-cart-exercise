@@ -1,36 +1,37 @@
-name: Java CI with Maven
+name: Run Selenium Tests with Maven
 
 on:
   push:
     branches:
-      - main
+      - main  # Cambia esto a la rama que desees (por ejemplo, "main" o "master")
   pull_request:
     branches:
-      - main
+      - main  # Cambia esto a la rama que desees
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  test:
+    runs-on: ubuntu-latest  # Usa un entorno Ubuntu para ejecutar las pruebas
 
     steps:
-      - name: Check out the repository
-        uses: actions/checkout@v2
+      # Paso 1: Checkout del código del repositorio
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
+      # Paso 2: Configura Java 21
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
         with:
-          java-version: '11'
+          java-version: '21'
+          distribution: 'temurin'  # Usa Temurin (Adoptium) como distribución de Java
 
-      - name: Cache Maven dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
-      - name: Build with Maven
-        run: mvn clean install -DskipTests=true
-
-      - name: Run tests
+      # Paso 3: Ejecuta las pruebas con Maven
+      - name: Run tests with Maven
         run: mvn test
+
+      # Paso 4: Sube los resultados de las pruebas (opcional)
+      - name: Upload test results
+        if: always()  # Sube los resultados incluso si las pruebas fallan
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: target/surefire-reports  # Cambia esto si tus resultados están en otra carpeta
