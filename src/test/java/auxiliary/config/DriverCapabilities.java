@@ -9,6 +9,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,12 +20,28 @@ public class DriverCapabilities {
         ChromeOptions options = new ChromeOptions();
 
         String userDataDir = "target/chrome_user_data_" + System.currentTimeMillis();
-        options.addArguments("user-data-dir=" + userDataDir);
+        File dir = new File(userDataDir);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
+        options.addArguments("user-data-dir=" + dir.getAbsolutePath());
         WebDriver driver = new ChromeDriver(options);
         windowDimension(driver);
+        
+        if (LocalConfiguration.web.enableLocation) {
+            Map<String, Object> coordinates = new HashMap<String, Object>() {{
+                put("latitude", LocalConfiguration.web.defaultLatitude);
+                put("longitude", LocalConfiguration.web.defaultLength);
+                put("accuracy", 1);
+            }};
+            ((ChromeDriver) driver).executeCdpCommand("Emulation.setGeolocationOverride", coordinates);
+        }
+
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(300));
         return driver;
     }
+
 
     public static WebDriver edgeDriver() {
         WebDriver driver = new EdgeDriver();
