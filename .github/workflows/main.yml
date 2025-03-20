@@ -1,20 +1,26 @@
+name: Selenium Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
           java-version: '21'
 
-      - name: Clean up old Chrome user data
-        run: |
-          rm -rf target/chrome_user_data_*
-
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up dependencies
+      - name: Install dependencies
         run: mvn install
 
       - name: Run tests
