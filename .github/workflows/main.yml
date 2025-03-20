@@ -30,6 +30,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
 
-      # Paso 4: Ejecuta las pruebas con Maven
+      # Paso 4: Verifica la versión de Chrome
+      - name: Check Chrome version
+        run: google-chrome --version
+
+      # Paso 5: Ejecuta las pruebas con Maven
       - name: Run tests with Maven
         run: mvn test -Dbrowser=chrome

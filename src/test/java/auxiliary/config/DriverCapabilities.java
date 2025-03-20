@@ -20,7 +20,7 @@ public class DriverCapabilities {
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--remote-allow-origins=*");
-        options.addArguments("--user-data-dir=/tmp/chrome-user-data-" + System.currentTimeMillis());
+        options.addArguments("--headless");
 
         WebDriver driver = new ChromeDriver(options);
         windowDimension(driver);
