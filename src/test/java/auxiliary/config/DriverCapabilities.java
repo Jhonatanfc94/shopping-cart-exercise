@@ -9,7 +9,6 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
-import java.io.File;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,18 +16,9 @@ import java.util.Random;
 
 public class DriverCapabilities {
     public static WebDriver chromeDriver() {
-        ChromeOptions options = new ChromeOptions();
-
-        String userDataDir = "target/chrome_user_data_" + System.currentTimeMillis();
-        File dir = new File(userDataDir);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-
-        options.addArguments("user-data-dir=" + dir.getAbsolutePath());
-        WebDriver driver = new ChromeDriver(options);
+        WebDriver driver = new ChromeDriver();
         windowDimension(driver);
-        
+
         if (LocalConfiguration.web.enableLocation) {
             Map<String, Object> coordinates = new HashMap<String, Object>() {{
                 put("latitude", LocalConfiguration.web.defaultLatitude);
